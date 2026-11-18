@@ -1,0 +1,59 @@
+schema: spec-driven
+
+context: |
+  Language: en
+  All artifacts must be written in en.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  MailChat is a PWA email client for Android and iOS, not a hosted email provider.
+  The first deployment target is a native Home Assistant add-on using a public HTTPS origin.
+  Account metadata and mail state remain device-local. The add-on relay is stateless and
+  must isolate credentials, sessions, mail caches, drafts, and Outbox data per user/device.
+  Gmail and Microsoft use OAuth with provider APIs. Custom accounts use TLS-only IMAP/SMTP.
+  Original MIME remains immutable; cleanup, threading, signatures, greetings, newsletters,
+  and no-reply behavior are presentation decisions.
+  Repository: BertVanBaelen/MailChat.
+  Registry: ghcr.io/bertvanbaelen/mailchat.
+  License: MIT.
+githubCopilot:
+  cloudAgent: false
+
+rules:
+  proposal:
+    - Keep the proposal focused on a single change.
+    - State explicit product and security constraints.
+    - Always list decisions that remain out of scope.
+  design:
+    - Prefer device-local security and stateless server components.
+    - Document OAuth, relay, threading, and newsletter boundaries.
+  tasks:
+    - Break implementation work into independently verifiable chunks.
+    - Add tests for the behavior described in the affected specification.
+  spec:
+    - Every requirement SHALL contain SHALL or MUST.
+    - Include normal, failure, and privacy scenarios where relevant.
+
+operations:
+  apply:
+    guidance:
+      - Implement from the approved proposal and linked specifications.
+      - Run the smallest relevant tests before broader validation.
+      - Never introduce server-side account or mailbox persistence.
+  archive:
+    guidance:
+      - Update only the specifications affected by the completed change.
+      - Verify every task is complete and the strict validation suite passes.
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing

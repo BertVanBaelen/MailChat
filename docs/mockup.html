@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chatmail Concept Mockup</title>
+  <style>
+    :root {
+      --green: #166534;
+      --green-2: #23834a;
+      --green-soft: #edf5f0;
+      --green-pale: #f6faf7;
+      --ink: #17231b;
+      --muted: #69756e;
+      --line: #dde5df;
+      --surface: #ffffff;
+      --amber: #a15c00;
+      --amber-soft: #fff7e8;
+      --red: #9b2c2c;
+      --red-soft: #fff0f0;
+      --blue: #315d88;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(22,101,52,.10), transparent 28rem),
+        radial-gradient(circle at 90% 85%, rgba(22,101,52,.07), transparent 24rem),
+        #edf2ef;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(620px, 1fr) 410px;
+      align-items: center;
+      gap: 26px;
+      padding: 22px 30px;
+    }
+    .phone {
+      position: relative;
+      justify-self: center;
+      width: 390px;
+      height: 844px;
+      overflow: hidden;
+      border: 10px solid #17231b;
+      border-radius: 42px;
+      background: var(--surface);
+      box-shadow: 0 24px 70px rgba(27,48,35,.20);
+    }
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 30;
+      top: 7px;
+      left: 135px;
+      width: 100px;
+      height: 22px;
+      border-radius: 14px;
+      background: #17231b;
+    }
+    .app {
+      height: 100%;
+      display: grid;
+      grid-template-rows: 82px minmax(0, 1fr) 74px;
+      background: #fbfcfb;
+    }
+    .header {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      padding: 38px 14px 9px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.97);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: -.4px;
+    }
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: white;
+      color: var(--ink);
+    }
+    .account-dot {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .content {
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .view {
+      display: none;
+      height: 100%;
+      min-height: 0;
+    }
+    .view.active { display: block; }
+
+    /* Inbox */
+    .inbox {
+      overflow-y: auto;
+      background: #fff;
+    }
+    .inbox-tools {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      padding: 10px 12px 8px;
+    }
+    .search {
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0 12px;
+      background: #f7faf8;
+      color: var(--ink);
+      outline: none;
+    }
+    .filter-btn {
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--green);
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 14px 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+    .thread-row {
+      display: grid;
+      grid-template-columns: 42px 1fr auto;
+      gap: 9px;
+      min-height: 78px;
+      padding: 9px 12px;
+      border: 0;
+      border-bottom: 1px solid #edf1ee;
+      width: 100%;
+      text-align: left;
+      background: #fff;
+      color: var(--ink);
+    }
+    .thread-row:hover, .thread-row.selected { background: var(--green-pale); }
+    .row-avatar {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #dfe9e2;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .row-avatar.news { background: var(--green); color: white; }
+    .row-avatar.alert { background: var(--amber-soft); color: var(--amber); }
+    .row-main { min-width: 0; }
+    .row-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+    .row-top strong {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+    .row-main p {
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .row-meta {
+      color: var(--muted);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      height: 18px;
+      padding: 0 6px;
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      font-size: 9px;
+      font-weight: 900;
+    }
+    .badge.neutral { background: #edf1ee; color: var(--muted); }
+    .badge.warn { background: var(--amber-soft); color: var(--amber); }
+
+    /* Thread */
+    .thread-view {
+      overflow-y: auto;
+      background: var(--green-pale);
+    }
+    .thread-head {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      display: grid;
+      grid-template-columns: 34px 1fr 34px;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(246,250,247,.97);
+      backdrop-filter: blur(8px);
+    }
+    .back-btn {
+      width: 34px;
+      height: 34px;
+      border: 0;
+      background: transparent;
+      color: var(--green);
+      font-size: 20px;
+    }
+    .thread-head strong { display: block; font-size: 14px; }
+    .thread-head small { color: var(--muted); font-size: 10px; }
+    .more-btn {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: white;
+    }
+    .messages {
+      padding: 8px 10px 14px;
+    }
+    .day-divider {
+      margin: 8px 0 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+    .bubble-row {
+      display: flex;
+      align-items: flex-end;
+      margin: 8px 0;
+    }
+    .bubble-row.mine { justify-content: flex-end; }
+    .avatar {
+      width: 28px;
+      height: 28px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      margin: 0 7px 2px 0;
+      border-radius: 50%;
+      background: #dfe8e2;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .bubble {
+      max-width: 278px;
+      padding: 9px 11px;
+      border: 1px solid var(--line);
+      border-radius: 16px 16px 16px 4px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(23,35,27,.04);
+    }
+    .bubble-row.mine .bubble {
+      border: 0;
+      border-radius: 16px 16px 4px 16px;
+      background: var(--green);
+      color: white;
+    }
+    .bubble-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+    }
+    .bubble-row.mine .bubble-meta { color: rgba(255,255,255,.72); }
+    .bubble p {
+      margin: 0;
+      line-height: 1.42;
+      font-size: 12.5px;
+    }
+    .mail-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 9.5px;
+    }
+    .bubble-row.mine .mail-status { color: rgba(255,255,255,.72); }
+    .cleaned {
+      margin-top: 6px;
+      padding-top: 5px;
+      border-top: 1px solid rgba(105,117,110,.15);
+      color: var(--muted);
+      font-size: 9.5px;
+    }
+    .bubble-row.mine .cleaned { border-color: rgba(255,255,255,.16); color: rgba(255,255,255,.72); }
+    .attachment {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 7px;
+      padding: 7px;
+      border-radius: 9px;
+      background: #eef4f0;
+      color: var(--ink);
+    }
+    .bubble-row.mine .attachment { background: rgba(255,255,255,.13); color: white; }
+    .file-icon {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 7px;
+      background: white;
+      color: var(--green);
+      font-size: 8px;
+      font-weight: 900;
+    }
+    .attachment small { display: block; margin-top: 2px; opacity: .72; }
+    .thread-warning {
+      margin: 8px 4px;
+      border: 1px solid #f1cf93;
+      border-radius: 12px;
+      padding: 9px 10px;
+      background: var(--amber-soft);
+      color: #76501c;
+      font-size: 10.5px;
+      line-height: 1.4;
+    }
+    .composer {
+      margin: 10px 4px 2px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: white;
+      box-shadow: 0 8px 24px rgba(23,35,27,.07);
+    }
+    .preset-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 7px 7px 0;
+    }
+    select {
+      min-width: 0;
+      height: 35px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0 22px 0 8px;
+      background: #f8faf8;
+      color: var(--ink);
+      font-size: 10.5px;
+      font-weight: 800;
+    }
+    .compose-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 38px;
+      align-items: center;
+      gap: 4px;
+      padding: 7px;
+    }
+    .attach-btn {
+      width: 32px;
+      height: 38px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 16px;
+    }
+    .compose-row input {
+      height: 38px;
+      min-width: 0;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--ink);
+      font-size: 12.5px;
+    }
+    .send {
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 17px;
+    }
+    .composer.disabled {
+      border-color: #efc7c7;
+      background: var(--red-soft);
+    }
+    .composer.disabled .preset-row,
+    .composer.disabled .compose-row { opacity: .38; }
+    .no-reply {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 10px;
+    }
+    .composer.disabled .no-reply { display: flex; }
+    .no-reply strong { display: block; font-size: 11px; color: var(--red); }
+    .no-reply small { color: var(--muted); font-size: 9.5px; }
+
+    /* Newsletter */
+    .newsletter-view {
+      overflow-y: auto;
+      background: white;
+    }
+    .newsletter-hero {
+      min-height: 166px;
+      padding: 22px 20px 17px;
+      background: linear-gradient(135deg, #103b21 0%, var(--green) 72%, #2d8b50 100%);
+      color: white;
+    }
+    .newsletter-label {
+      display: inline-flex;
+      height: 24px;
+      align-items: center;
+      padding: 0 8px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 12px;
+      font-size: 9px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+    .newsletter-hero h2 { margin: 34px 0 4px; font-size: 23px; }
+    .newsletter-hero p { margin: 0; color: rgba(255,255,255,.78); font-size: 11px; }
+    .article { padding: 15px 18px 24px; }
+    .article h3 { margin: 0 0 7px; font-size: 16px; }
+    .article p { margin: 0 0 10px; color: #4f5e54; font-size: 12.5px; line-height: 1.55; }
+    .article-card {
+      display: grid;
+      grid-template-columns: 1fr 54px;
+      gap: 10px;
+      margin-top: 10px;
+      padding: 11px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+    }
+    .article-card strong { font-size: 12px; }
+    .article-card p { margin: 4px 0 0; font-size: 11px; }
+    .thumb {
+      height: 54px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, #a9c7b3, var(--green));
+    }
+    .newsletter-actions {
+      position: sticky;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: 1fr 44px;
+      gap: 8px;
+      padding: 8px 12px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.96);
+    }
+    .open-browser, .archive-news {
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .open-browser { color: var(--green); }
+
+    /* Settings */
+    .settings {
+      overflow-y: auto;
+      padding: 12px;
+      background: #f7faf8;
+    }
+    .settings-card {
+      margin-bottom: 11px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: white;
+    }
+    .settings-card h3 {
+      margin: 0;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 12px;
+    }
+    .setting-row {
+      min-height: 51px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 12px;
+      border-bottom: 1px solid #edf1ee;
+      font-size: 12px;
+    }
+    .setting-row:last-child { border-bottom: 0; }
+    .setting-row small { display: block; margin-top: 2px; color: var(--muted); font-size: 9.5px; }
+    .provider-icon {
+      width: 31px;
+      height: 31px;
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--green);
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+    }
+    .toggle {
+      margin-left: auto;
+      width: 38px;
+      height: 22px;
+      border-radius: 11px;
+      background: var(--green);
+      padding: 3px;
+    }
+    .toggle::after {
+      content: "";
+      display: block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      transform: translateX(16px);
+    }
+    .preset-row-settings {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 7px;
+      align-items: center;
+      padding: 8px 12px;
+      border-bottom: 1px solid #edf1ee;
+      font-size: 11.5px;
+    }
+    .preset-row-settings:last-child { border-bottom: 0; }
+    .preset-row-settings strong { display: block; }
+    .preset-row-settings small { color: var(--muted); }
+    .add-btn {
+      height: 30px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      background: white;
+    }
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 800;
+    }
+    .nav button.active { color: var(--green); }
+    .nav-icon {
+      width: 19px;
+      height: 19px;
+      display: block;
+      margin: 0 auto 4px;
+      border: 2px solid currentColor;
+      border-radius: 6px;
+    }
+    .nav button:nth-child(2) .nav-icon { border-radius: 50% 50% 50% 4px; }
+    .nav button:nth-child(3) .nav-icon { border-radius: 3px 3px 10px 10px; }
+
+    /* Dialogs */
+    .overlay {
+      position: absolute;
+      z-index: 40;
+      inset: 0;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(23,35,27,.42);
+    }
+    .overlay.open { display: flex; }
+    .dialog {
+      width: 100%;
+      border-radius: 18px;
+      padding: 16px;
+      background: white;
+      box-shadow: 0 20px 60px rgba(23,35,27,.24);
+    }
+    .dialog h3 { margin: 0 0 6px; font-size: 15px; }
+    .dialog p { margin: 0 0 14px; color: var(--muted); font-size: 11.5px; line-height: 1.45; }
+    .dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .dialog-actions button {
+      height: 40px;
+      border-radius: 10px;
+      font-weight: 900;
+    }
+    .cancel { border: 1px solid var(--line); background: white; color: var(--ink); }
+    .continue { border: 0; background: var(--green); color: white; }
+    .toast {
+      position: absolute;
+      z-index: 50;
+      left: 50%;
+      bottom: 84px;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      max-width: 300px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background: #17231b;
+      color: white;
+      font-size: 10.5px;
+      text-align: center;
+      pointer-events: none;
+      transition: .25s ease;
+    }
+    .toast.open { opacity: 1; transform: translate(-50%, 0); }
+
+    /* Prototype control panel */
+    .panel {
+      justify-self: start;
+      width: 410px;
+      max-height: 844px;
+      overflow-y: auto;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 20px;
+      background: rgba(255,255,255,.96);
+      box-shadow: 0 18px 50px rgba(27,48,35,.10);
+    }
+    .eyebrow {
+      color: var(--green);
+      font-size: 10px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    .panel h2 {
+      margin: 6px 0 8px;
+      font-size: 23px;
+      letter-spacing: -.5px;
+    }
+    .panel-intro {
+      margin: 0 0 13px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.48;
+    }
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+    .scenario {
+      min-height: 72px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 9px;
+      background: white;
+      text-align: left;
+    }
+    .scenario.active {
+      border: 2px solid var(--green);
+      padding: 8px;
+      background: var(--green-pale);
+    }
+    .scenario strong { display: block; font-size: 11.5px; }
+    .scenario small { display: block; margin-top: 4px; color: var(--muted); font-size: 9.5px; line-height: 1.35; }
+    .concept-section {
+      margin-top: 15px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line);
+    }
+    .concept-section h3 { margin: 0 0 8px; font-size: 12.5px; }
+    .choice {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 7px;
+      align-items: start;
+      margin: 6px 0;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 8px;
+      background: white;
+      font-size: 10.5px;
+    }
+    .choice-mark {
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      font-size: 9px;
+      font-weight: 900;
+    }
+    .choice small { display: block; margin-top: 3px; color: var(--muted); line-height: 1.35; }
+    .edge-list {
+      margin: 0;
+      padding-left: 16px;
+      color: #4f5e54;
+      font-size: 10.5px;
+      line-height: 1.65;
+    }
+    .edge-list strong { color: var(--ink); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="phone" aria-label="Chatmail mobile mockup">
+      <div class="app">
+        <header class="header">
+          <h1 id="headerTitle">Inbox</h1>
+          <div class="header-actions">
+            <button class="icon-btn" id="searchHeader" aria-label="Search">⌕</button>
+            <div class="account-dot">BV</div>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="view inbox active" id="inboxView">
+            <div class="inbox-tools">
+              <input class="search" aria-label="Search mail" placeholder="Search people, subjects, and mail" />
+              <button class="filter-btn" aria-label="Filter">≡</button>
+            </div>
+            <div class="section-label"><span>Primary</span><span>5 unread</span></div>
+            <button class="thread-row selected" data-open-thread="project">
+              <div class="row-avatar">P</div>
+              <div class="row-main">
+                <div class="row-top"><strong>Project handoff</strong><span class="badge">3</span></div>
+                <p>Mike: I added the launch notes. No blocker so far.</p>
+              </div>
+              <div class="row-meta">10:03</div>
+            </button>
+            <button class="thread-row" data-open-thread="family">
+              <div class="row-avatar alert">F</div>
+              <div class="row-main">
+                <div class="row-top"><strong>Family plans</strong><span class="badge neutral">2</span></div>
+                <p>Megan: Saturday lunch works. Shall we book 12:30?</p>
+              </div>
+              <div class="row-meta">09:18</div>
+            </button>
+            <button class="thread-row" data-open-thread="vendor">
+              <div class="row-avatar">V</div>
+              <div class="row-main">
+                <div class="row-top"><strong>Office quote</strong><span class="badge warn">follow-up</span></div>
+                <p>Sales: The revised quote is now available.</p>
+              </div>
+              <div class="row-meta">Yesterday</div>
+            </button>
+
+            <div class="section-label"><span>Newsletters</span><span>12 this week</span></div>
+            <button class="thread-row" data-open-news="field">
+              <div class="row-avatar news">FN</div>
+              <div class="row-main">
+                <div class="row-top"><strong>Field Notes</strong><span class="badge neutral">new</span></div>
+                <p>Three ideas worth keeping this week...</p>
+              </div>
+              <div class="row-meta">08:20</div>
+            </button>
+            <button class="thread-row" data-open-news="daily">
+              <div class="row-avatar news">D</div>
+              <div class="row-main">
+                <div class="row-top"><strong>Daily Dispatch</strong></div>
+                <p>Markets, science, and the week ahead.</p>
+              </div>
+              <div class="row-meta">Yesterday</div>
+            </button>
+          </section>
+
+          <section class="view thread-view" id="threadView">
+            <div class="thread-head">
+              <button class="back-btn" id="backToInbox" aria-label="Back">‹</button>
+              <div><strong id="threadTitle">Project handoff</strong><small id="threadMeta">4 messages · 3 people</small></div>
+              <button class="more-btn" aria-label="Thread options">•••</button>
+            </div>
+            <div class="messages" id="messages"></div>
+          </section>
+
+          <section class="view newsletter-view" id="newsletterView">
+            <div class="newsletter-hero">
+              <span class="newsletter-label">Newsletter · no-reply</span>
+              <h2 id="newsletterTitle">Field Notes</h2>
+              <p id="newsletterMeta">Weekly brief · 18 November</p>
+            </div>
+            <article class="article" id="newsletterArticle">
+              <h3>Three ideas worth keeping</h3>
+              <p>This week: quieter planning, more useful metrics, and why good tools should feel almost invisible.</p>
+              <div class="article-card">
+                <div><strong>Inside the new workflow</strong><p>A practical guide to reducing context switching across the team.</p></div>
+                <div class="thumb"></div>
+              </div>
+              <div class="article-card">
+                <div><strong>From the community</strong><p>Small changes that made a large difference in daily operations.</p></div>
+                <div class="thumb"></div>
+              </div>
+            </article>
+            <div class="newsletter-actions">
+              <button class="open-browser" id="openBrowser">Open full article</button>
+              <button class="archive-news" id="archiveNews" aria-label="Archive newsletter">✓</button>
+            </div>
+          </section>
+
+          <section class="view settings" id="settingsView">
+            <div class="settings-card">
+              <h3>Accounts</h3>
+              <div class="setting-row">
+                <div class="provider-icon">G</div>
+                <div><strong>Google</strong><small>alice@gmail.com · connected</small></div>
+                <div class="toggle"></div>
+              </div>
+              <div class="setting-row">
+                <div class="provider-icon">M</div>
+                <div><strong>Microsoft</strong><small>work@company.com · connected</small></div>
+                <div class="toggle"></div>
+              </div>
+              <div class="setting-row">
+                <div class="provider-icon">IM</div>
+                <div><strong>Custom TLS</strong><small>mail@domain.com · IMAP / SMTP</small></div>
+                <div class="toggle"></div>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <h3>Greeting presets</h3>
+              <div class="preset-row-settings"><div><strong>Brief</strong><small>Hi</small></div><button class="add-btn">Edit</button></div>
+              <div class="preset-row-settings"><div><strong>Formal</strong><small>Dear {name}</small></div><button class="add-btn">Edit</button></div>
+              <div class="preset-row-settings"><div><strong>No greeting</strong><small>Start directly</small></div><button class="add-btn">Edit</button></div>
+            </div>
+
+            <div class="settings-card">
+              <h3>Signature presets</h3>
+              <div class="preset-row-settings"><div><strong>Brief</strong><small>Best, Alice</small></div><button class="add-btn">Edit</button></div>
+              <div class="preset-row-settings"><div><strong>Formal</strong><small>Kind regards<br />Alice Becker</small></div><button class="add-btn">Edit</button></div>
+              <div class="preset-row-settings"><div><strong>Project</strong><small>Product Team · Alice</small></div><button class="add-btn">Edit</button></div>
+            </div>
+
+            <div class="settings-card">
+              <h3>Chat cleanup</h3>
+              <div class="setting-row"><div>Hide signatures</div><div class="toggle"></div></div>
+              <div class="setting-row"><div>Hide quoted history</div><div class="toggle"></div></div>
+              <div class="setting-row"><div>Hide generic greetings</div><div class="toggle"></div></div>
+            </div>
+          </section>
+
+          <div class="overlay" id="confirmOverlay">
+            <div class="dialog">
+              <h3 id="dialogTitle">Send to a no-reply address?</h3>
+              <p id="dialogCopy">This sender is marked as no-reply. The recipient may not receive or read responses.</p>
+              <div class="dialog-actions">
+                <button class="cancel" id="dialogCancel">Cancel</button>
+                <button class="continue" id="dialogContinue">Send anyway</button>
+              </div>
+            </div>
+          </div>
+          <div class="toast" id="toast">Saved to this thread</div>
+        </div>
+
+        <nav class="nav" aria-label="App navigation">
+          <button class="active" data-view="inboxView"><span class="nav-icon"></span>Inbox</button>
+          <button data-view="threadView"><span class="nav-icon"></span>Thread</button>
+          <button data-view="newsletterView"><span class="nav-icon"></span>News</button>
+          <button data-view="settingsView"><span class="nav-icon"></span>Settings</button>
+        </nav>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="eyebrow">Interactive prototype</div>
+      <h2>Thread and delivery states</h2>
+      <p class="panel-intro">Try the inbox and open a scenario. Presets, cleanup, and no-reply behavior stay associated with the selected thread.</p>
+
+      <div class="scenario-grid" id="scenarioGrid">
+        <button class="scenario active" data-scenario="project"><strong>Repeated send</strong><small>Several outgoing and incoming messages in one thread</small></button>
+        <button class="scenario" data-scenario="family"><strong>Short conversation</strong><small>Switch greeting and signature across a casual thread</small></button>
+        <button class="scenario" data-scenario="vendor"><strong>No-reply vendor</strong><small>Disabled compose with an explicit override</small></button>
+        <button class="scenario" data-scenario="draft"><strong>Forward + attachment</strong><small>Long chain, attachment, and cleanup fallback</small></button>
+      </div>
+
+      <div class="concept-section">
+        <h3>Per-thread compose settings</h3>
+        <div class="choice"><div class="choice-mark">1</div><div><strong>Greeting and signature stay with this chat</strong><small>Selections are remembered after switching threads or leaving the app.</small></div></div>
+        <div class="choice"><div class="choice-mark">2</div><div><strong>Defaults do not silently replace choices</strong><small>Account defaults are only initial choices for a new thread.</small></div></div>
+        <div class="choice"><div class="choice-mark">3</div><div><strong>Outgoing mail carries both by default</strong><small>The chat clean view hides them immediately after sending.</small></div></div>
+      </div>
+
+      <div class="concept-section">
+        <h3>Edge-case behavior</h3>
+        <ul class="edge-list">
+          <li><strong>Multiple sends:</strong> sent bubbles preserve separate timestamps and delivery status.</li>
+          <li><strong>Subject changes:</strong> keep under a thread only when message IDs connect them.</li>
+          <li><strong>Forwarding:</strong> show a distinct attachment/forward bubble; do not merge with original sender history.</li>
+          <li><strong>No-reply:</strong> disable compose and require confirmation if a sender address is overridden.</li>
+          <li><strong>Mailing list:</strong> show the list address separately and offer Reply vs Reply all.</li>
+          <li><strong>Newsletter:</strong> detect no-reply, bulk, and list headers; open page reader instead of chat.</li>
+          <li><strong>Cleanup:</strong> original MIME, headers, and quoted history remain available on “Show original.”</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    const projectMessages = `
+      <div class="day-divider">Today</div>
+      <div class="bubble-row">
+        <div class="avatar">AL</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Alice</span><span>09:42</span></div>
+          <p>Hi, I’ve attached the revised checklist. The remaining items are ready for review.</p>
+          <div class="cleaned">Signature hidden · <u>Show original</u></div>
+          <div class="attachment"><div class="file-icon">PDF</div><div><strong>handoff-checklist.pdf</strong><small>184 KB · tap to preview</small></div></div>
+        </article>
+      </div>
+      <div class="bubble-row mine">
+        <article class="bubble">
+          <div class="bubble-meta"><span>You</span><span>09:47</span></div>
+          <p>Thanks Alice. I’ll review them this afternoon and send a consolidated update.</p>
+          <div class="cleaned">Greeting + signature applied · Delivered</div>
+        </article>
+      </div>
+      <div class="bubble-row">
+        <div class="avatar">AL</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Alice</span><span>09:51</span></div>
+          <p>Perfect. Please include Mike if the launch notes need another pass.</p>
+          <div class="cleaned">Quoted previous reply hidden · <u>Show original</u></div>
+        </article>
+      </div>
+      <div class="bubble-row mine">
+        <article class="bubble">
+          <div class="bubble-meta"><span>You</span><span>09:55</span></div>
+          <p>I added Mike to the thread. The revised schedule is the only open item.</p>
+          <div class="cleaned">Sent to 2 recipients · Reply all</div>
+        </article>
+      </div>
+      <div class="bubble-row">
+        <div class="avatar">MK</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Mike</span><span>10:03</span></div>
+          <p>I added the launch notes. No blocker so far.</p>
+          <div class="cleaned">Quoted chain hidden · <u>Show original</u></div>
+        </article>
+      </div>
+      ${composer(false)}
+    `;
+
+    const familyMessages = `
+      <div class="day-divider">Today</div>
+      <div class="bubble-row">
+        <div class="avatar">MG</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Megan</span><span>09:10</span></div>
+          <p>Are we still on for lunch on Saturday?</p>
+          <div class="cleaned">Reply chain hidden</div>
+        </article>
+      </div>
+      <div class="bubble-row mine">
+        <article class="bubble">
+          <div class="bubble-meta"><span>You</span><span>09:14</span></div>
+          <p>Saturday works. Does 12:30 suit you?</p>
+          <div class="cleaned">Casual greeting + brief signature applied</div>
+        </article>
+      </div>
+      <div class="bubble-row">
+        <div class="avatar">MG</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Megan</span><span>09:18</span></div>
+          <p>12:30 is perfect. I’ll book the table.</p>
+          <div class="cleaned">Signature hidden · <u>Show original</u></div>
+        </article>
+      </div>
+      ${composer(false)}
+    `;
+
+    const vendorMessages = `
+      <div class="day-divider">Yesterday</div>
+      <div class="bubble-row">
+        <div class="avatar">VS</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Vendor Sales</span><span>14:22</span></div>
+          <p>The revised office quote is available. This address is monitored by a customer support system.</p>
+          <div class="attachment"><div class="file-icon">PDF</div><div><strong>revised-quote.pdf</strong><small>92 KB · external link</small></div></div>
+          <div class="cleaned">Marketing footer hidden · <u>Show original</u></div>
+        </article>
+      </div>
+      <div class="thread-warning">No-reply sender detected. This thread was marked read-only for responses.</div>
+      ${composer(true)}
+    `;
+
+    const draftMessages = `
+      <div class="day-divider">Yesterday</div>
+      <div class="bubble-row">
+        <div class="avatar">LI</div>
+        <article class="bubble">
+          <div class="bubble-meta"><span>Liam</span><span>16:08</span></div>
+          <p>Forwarding the workshop notes so they stay in the right thread.</p>
+          <div class="attachment"><div class="file-icon">DOC</div><div><strong>Forwarded: workshop-notes.docx</strong><small>3 attachments · 1.2 MB</small></div></div>
+          <div class="cleaned">Forward headers hidden · <u>Show original</u></div>
+        </article>
+      </div>
+      <div class="bubble-row mine">
+        <article class="bubble">
+          <div class="bubble-meta"><span>You · draft</span><span>Now</span></div>
+          <p>I’ll add the remaining questions and send this before the workshop.</p>
+          <div class="cleaned">Draft kept locally · Not sent</div>
+        </article>
+      </div>
+      ${composer(false)}
+    `;
+
+    function composer(disabled) {
+      return `
+        <div class="composer ${disabled ? "disabled" : ""}">
+          <div class="no-reply">
+            <div><strong>Replies disabled</strong><small>Use this sender’s support channel instead</small></div>
+            <button class="add-btn" id="openSupport">Details</button>
+          </div>
+          <div class="preset-row">
+            <select aria-label="Greeting preset">
+              <option>Greeting: Hi</option>
+              <option>Greeting: Hello</option>
+              <option>Greeting: Good morning</option>
+              <option>Greeting: No greeting</option>
+            </select>
+            <select aria-label="Signature preset">
+              <option>Signature: Brief</option>
+              <option>Signature: Formal</option>
+              <option>Signature: Project</option>
+              <option>Signature: None</option>
+            </select>
+          </div>
+          <div class="compose-row">
+            <button class="attach-btn" aria-label="Attach">＋</button>
+            <input aria-label="Message" placeholder="${disabled ? "Replies unavailable" : "Write a message..."}" ${disabled ? "disabled" : ""} />
+            <button class="send" aria-label="Send" ${disabled ? "disabled" : ""}>↑</button>
+          </div>
+        </div>
+      `;
+    }
+
+    const threadData = {
+      project: { title: "Project handoff", meta: "4 messages · 3 people", messages: projectMessages },
+      family: { title: "Family plans", meta: "3 messages · 2 people", messages: familyMessages },
+      vendor: { title: "Office quote", meta: "No-reply · 1 newsletter-like message", messages: vendorMessages },
+      draft: { title: "Workshop notes", meta: "Forwarded thread · 1 draft", messages: draftMessages }
+    };
+
+    function showView(viewId) {
+      document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+      document.querySelectorAll(".nav button").forEach((button) => button.classList.remove("active"));
+      document.getElementById(viewId).classList.add("active");
+      const navButton = document.querySelector(`.nav button[data-view="${viewId}"]`);
+      if (navButton) navButton.classList.add("active");
+      const titles = { inboxView: "Inbox", threadView: "Threads", newsletterView: "Newsletters", settingsView: "Settings" };
+      document.getElementById("headerTitle").textContent = titles[viewId];
+    }
+
+    function openThread(key) {
+      const data = threadData[key];
+      document.getElementById("threadTitle").textContent = data.title;
+      document.getElementById("threadMeta").textContent = data.meta;
+      document.getElementById("messages").innerHTML = data.messages;
+      showView("threadView");
+      bindDynamicActions();
+    }
+
+    function bindDynamicActions() {
+      document.querySelectorAll(".send").forEach((button) => {
+        button.addEventListener("click", () => {
+          const threadTitle = document.getElementById("threadTitle").textContent;
+          if (threadTitle === "Office quote") {
+            openConfirm("Send to a no-reply address?", "This sender is marked as no-reply. The recipient may not receive or read responses.");
+          } else {
+            showToast("Sent from this thread");
+          }
+        });
+      });
+      const support = document.getElementById("openSupport");
+      if (support) support.addEventListener("click", () => openConfirm("Open the sender website?", "This no-reply message provides a support page. Continue outside the mail app?"));
+    }
+
+    document.querySelectorAll(".nav button").forEach((button) => {
+      button.addEventListener("click", () => showView(button.dataset.view));
+    });
+    document.querySelectorAll("[data-open-thread]").forEach((button) => {
+      button.addEventListener("click", () => openThread(button.dataset.openThread));
+    });
+    document.querySelectorAll("[data-open-news]").forEach((button) => {
+      button.addEventListener("click", () => showView("newsletterView"));
+    });
+    document.getElementById("backToInbox").addEventListener("click", () => showView("inboxView"));
+
+    document.querySelectorAll(".scenario").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".scenario").forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        const key = button.dataset.scenario;
+        openThread(key === "draft" ? "draft" : key);
+        if (key === "draft") showToast("Forwarded thread with 1 draft");
+      });
+    });
+
+    const overlay = document.getElementById("confirmOverlay");
+    function openConfirm(title, copy) {
+      document.getElementById("dialogTitle").textContent = title;
+      document.getElementById("dialogCopy").textContent = copy;
+      overlay.classList.add("open");
+    }
+    document.getElementById("dialogCancel").addEventListener("click", () => overlay.classList.remove("open"));
+    document.getElementById("dialogContinue").addEventListener("click", () => {
+      overlay.classList.remove("open");
+      showToast("Confirmation recorded");
+    });
+    document.getElementById("openBrowser").addEventListener("click", () => showToast("External article opened"));
+    document.getElementById("archiveNews").addEventListener("click", () => showToast("Newsletter archived"));
+
+    let toastTimer;
+    function showToast(text) {
+      const toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.classList.add("open");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("open"), 1800);
+    }
+
+    openThread("project");
+  </script>
+</body>
+</html>
