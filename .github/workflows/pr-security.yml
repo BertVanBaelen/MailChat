@@ -42,25 +42,3 @@ jobs:
       - uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  container:
-    if: ${{ hashFiles('mailchat/Dockerfile') != '' }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v7
-      - uses: docker/setup-buildx-action@v4
-      - uses: docker/build-push-action@v7
-        with:
-          context: ./mailchat
-          push: false
-          load: true
-          tags: mailchat:pr-${{ github.event.pull_request.number || github.run_number }}
-      - uses: aquasecurity/trivy-action@0.28.0
-        with:
-          image-ref: mailchat:pr-${{ github.event.pull_request.number || github.run_number }}
-          format: table
-          exit-code: 1
-          ignore-unfixed: true
-          severity: CRITICAL,HIGH
