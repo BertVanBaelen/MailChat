@@ -4,26 +4,26 @@
 
 - [x] Scaffold the GitHub repository and OpenSpec structure.
 - [ ] Confirm public HTTPS origin and OAuth callback URLs.
-- [ ] Scaffold React, TypeScript, Vite, PWA, and lint/test tooling.
-- [ ] Add strict component, lint, and build configuration.
+- [x] Scaffold React, TypeScript, Vite, PWA, and lint/test tooling.
+- [x] Add strict component, lint, and build configuration.
 - [ ] Add Kokonut UI and Untitled UI only after license and package checks.
 
 ## 2. Local account vault
 
-- [ ] Implement account metadata and Web Crypto secret storage.
+- [x] Implement account metadata and Web Crypto secret storage.
 - [ ] Implement Gmail OAuth with PKCE.
 - [ ] Implement Microsoft OAuth with PKCE.
-- [ ] Implement custom IMAP/SMTP configuration and TLS validation.
+- [x] Implement custom IMAP/SMTP configuration and TLS validation.
 - [ ] Add account reconnect and revoke states.
 
 ## 3. Mail relay
 
-- [ ] Scaffold Fastify inside the Home Assistant add-on image.
+- [x] Scaffold Fastify inside the Home Assistant add-on image.
 - [ ] Implement Gmail and Microsoft provider adapters.
-- [ ] Implement ImapFlow sync adapter.
-- [ ] Implement Nodemailer send adapter.
-- [ ] Reject loopback, link-local, metadata, and private destinations.
-- [ ] Add request limits and bounded attachment handling.
+- [x] Implement ImapFlow sync adapter.
+- [x] Implement Nodemailer send adapter.
+- [x] Reject loopback, link-local, metadata, and private destinations.
+- [x] Add request limits and bounded attachment handling.
 
 ## 4. Mail parser and thread engine
 
@@ -52,8 +52,8 @@
 
 ## 7. PWA
 
-- [ ] Add install manifest and icons.
-- [ ] Add service-worker update behavior.
+- [x] Add install manifest and icons.
+- [x] Add service-worker update behavior.
 - [ ] Add offline shell and cached thread behavior.
 - [ ] Document iOS foreground-sync limits.
 - [ ] Add Android and iOS smoke checks.
@@ -68,10 +68,10 @@
 
 ## 9. Security and automation
 
-- [ ] Add pull-request lint, typecheck, test, and build checks.
-- [ ] Add CodeQL.
-- [ ] Add secret scanning.
-- [ ] Add dependency review and lockfile auditing.
+- [x] Add pull-request lint, typecheck, test, and build checks.
+- [x] Add CodeQL.
+- [x] Add secret scanning.
+- [x] Add dependency review and lockfile auditing.
 - [ ] Add container image scanning.
-- [ ] Add SBOM and provenance.
-- [ ] Add release workflow for tags and immutable digests.
+- [x] Add SBOM and provenance.
+- [x] Add release workflow for tags and immutable digests.
