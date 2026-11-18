@@ -2,8 +2,8 @@
 
 ## 1. Foundation
 
+- [x] Scaffold the GitHub repository and OpenSpec structure.
 - [ ] Confirm public HTTPS origin and OAuth callback URLs.
-- [ ] Scaffold the GitHub repository and OpenSpec structure.
 - [ ] Scaffold React, TypeScript, Vite, PWA, and lint/test tooling.
 - [ ] Add strict component, lint, and build configuration.
 - [ ] Add Kokonut UI and Untitled UI only after license and package checks.

@@ -13,6 +13,8 @@ The interactive concept mockup is available at [`docs/mockup.html`](docs/mockup.
 The first Graphify pass produced [`graphify-out/graph.html`](graphify-out/graph.html) and [`graphify-out/GRAPH_REPORT.md`](graphify-out/GRAPH_REPORT.md).
 The graph contains 74 nodes and 86 edges across 10 communities. Graph integrity found no dangling endpoints, missing endpoints, self-loops, or directed edge collapses.
 
+The implementation sequence and MVP exit criteria are documented in [`ROADMAP.md`](ROADMAP.md).
+
 ## Core decisions
 
 - PWA-first delivery, with no App Store or Play Store dependency
