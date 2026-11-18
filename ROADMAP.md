@@ -28,7 +28,7 @@ Exit criteria:
 
 ### 1. PWA shell and local foundation
 
-Status: Next
+Status: In progress
 
 Build:
 
@@ -51,7 +51,7 @@ Exit criteria:
 
 ### 2. Custom TLS account vertical slice
 
-Status: Planned
+Status: In progress
 
 Build:
 
